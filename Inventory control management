@@ -1,0 +1,44 @@
+-- Inventory Items Table
+CREATE TABLE InventoryItems (
+    ItemID INT PRIMARY KEY,
+    Description VARCHAR(255),
+    UnitPrice DECIMAL(10, 2),
+    Quantity INT
+    -- Additional attributes as needed
+);
+
+-- Transactions Table
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    TransactionType VARCHAR(50),
+    Quantity INT,
+    TransactionDate DATE
+    -- Additional attributes as needed
+);
+
+-- Orders Table
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    CustomerSupplier VARCHAR(255),
+    Status VARCHAR(50)
+    -- Additional attributes as needed
+);
+
+-- Inventory Items-Transactions Relationship Table (One-to-many)
+CREATE TABLE ItemTransactions (
+    ItemID INT,
+    TransactionID INT,
+    PRIMARY KEY (ItemID, TransactionID),
+    FOREIGN KEY (ItemID) REFERENCES InventoryItems(ItemID),
+    FOREIGN KEY (TransactionID) REFERENCES Transactions(TransactionID)
+);
+
+-- Orders-Transactions Relationship Table (One-to-many)
+CREATE TABLE OrderTransactions (
+    OrderID INT,
+    TransactionID INT,
+    PRIMARY KEY (OrderID, TransactionID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (TransactionID) REFERENCES Transactions(TransactionID)
+);
